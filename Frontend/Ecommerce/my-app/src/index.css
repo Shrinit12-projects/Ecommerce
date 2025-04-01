@@ -61,3 +61,8 @@ body {
 .product-card button:hover {
   background-color: #1a5bb8;
 }
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}

@@ -20,5 +20,6 @@ export class Product {
   @Column()
   description!: string;
   
-  
+  @Column()
+  imageUrl!: string; // URL of the product image stored as a string column
 }

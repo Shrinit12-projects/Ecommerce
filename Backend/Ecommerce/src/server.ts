@@ -3,20 +3,34 @@ import cors from "cors";
 import { AppDataSource } from "./ormconfig";
 import { Product } from "./entities/product";
 import { Repository } from "typeorm";
+import { uploadFileToMinio } from "./helper/minioConfig"; // Adjust the import path as necessary
+import multer from "multer";
 
-const app: Application = express(); // Ensure correct Express type
+const app: Application = express();
 app.use(cors());
 app.use(express.json());
 
+const upload = multer({ storage: multer.memoryStorage() });
+
 const productRepo: Repository<Product> = AppDataSource.getRepository(Product);
 
-// Add New Product
-app.post("/api/products", async (req: Request, res: Response): Promise<void> => {
+// ✅ Updated: Add New Product with Image Upload
+app.post("/api/products", upload.single("image"), async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, price, description } = req.body;
-    const product = productRepo.create({ name, price, description });
+    if (!req.file) {
+      res.status(400).json({ error: "Image is required" });
+      return;
+    }
+
+    // Upload image to MinIO
+    const imageUrl = await uploadFileToMinio(req.file);
+
+    // Save product details
+    const product = productRepo.create({ name, price, description, imageUrl });
     await productRepo.save(product);
-    res.json(product); // No need to return `res.json(...)`
+
+    res.json(product);
   } catch (error) {
     res.status(500).json({ error: "Error saving product" });
   }
@@ -48,11 +62,12 @@ app.get("/api/products/:id", async (req: Request, res: Response): Promise<void> 
 });
 
 // Edit Product
-app.put("/api/products/:id", async (req: Request, res: Response): Promise<void> => {
+app.put("/api/products/:id", upload.single("image"), async (req: Request, res: Response): Promise<void> => {
   try {
     const id = Number(req.params.id);
     const { name, price, description } = req.body;
     const product = await productRepo.findOneBy({ id });
+    console.log("Product:", product);
     if (!product) {
       res.status(404).json({ error: "Product not found" });
       return;
@@ -60,6 +75,10 @@ app.put("/api/products/:id", async (req: Request, res: Response): Promise<void> 
     product.name = name;
     product.price = price;
     product.description = description;
+    if (req.file) {
+      const imageUrl = await uploadFileToMinio(req.file);
+      product.imageUrl = imageUrl;
+    }
     await productRepo.save(product);
     res.json(product);
   } catch (error) {
@@ -84,5 +103,5 @@ app.delete("/api/products/:id", async (req: Request, res: Response): Promise<voi
 });
 
 // Start Server
-const PORT = 5000;
+const PORT = 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
