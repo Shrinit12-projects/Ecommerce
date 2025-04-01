@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fcefaa; /* Light blue-gray background like Flipkart */
+    color:  #219b72;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav {
+    background-color: #ffd700; /* Flipkart yellow */
+    padding: 15px;
+    text-align: center;
+  }
+  
+  nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 15px;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5px;
+    color: #219b72  ;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    color: #ffd700;
+  }
+  
+  .product-card {
+    background-color: rgb(72, 126, 206);
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 15px 10px 10px rgba(5, 14, 114, 0.1);
+  } 
+  
+  .product-card button {
+    background-color: #fdfdfd; /* Flipkart blue */
+    color:  rgb(72, 126, 206);
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .product-card button:hover {
+    background-color: #219b72; /* Flipkart blue */
+    color: white;
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+  }
+
+  .product-card :hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .cart-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .parent_nav {
+    display: flex;
+    align-items: right;
+    padding: 10px 20px;
+    background-color: #219b72; /* Flipkart blue */
+    color: white;
+  }
+
+  .all-product{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #219b72; /* Flipkart blue */
+    color: white;
+    transition: background-color 0.3s ease;
+    
+}
+
+.all-product:hover {
+    color: #ffd700; /* Yellow on hover */
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+}
