@@ -14,7 +14,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const productRepo: Repository<Product> = AppDataSource.getRepository(Product);
 
-// ✅ Updated: Add New Product with Image Upload
+//Add New Product with Image Upload
 app.post("/api/products", upload.single("image"), async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, price, description } = req.body;
@@ -40,7 +40,7 @@ app.post("/api/products", upload.single("image"), async (req: Request, res: Resp
 app.get("/api/products", async (_req: Request, res: Response): Promise<void> => {
   try {
     const products = await productRepo.find();
-    res.json(products);
+    res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ error: "Error fetching products" });
   }
@@ -80,7 +80,7 @@ app.put("/api/products/:id", upload.single("image"), async (req: Request, res: R
       product.imageUrl = imageUrl;
     }
     await productRepo.save(product);
-    res.json(product);
+    res.status(204).json(product);
   } catch (error) {
     res.status(500).json({ error: "Error updating product" });
   }
@@ -96,7 +96,7 @@ app.delete("/api/products/:id", async (req: Request, res: Response): Promise<voi
       return;
     }
     await productRepo.remove(product);
-    res.json({ message: "Product deleted" });
+    res.status(200).json({ message: "Product deleted" });
   } catch (error) {
     res.status(500).json({ error: "Error deleting product" });
   }

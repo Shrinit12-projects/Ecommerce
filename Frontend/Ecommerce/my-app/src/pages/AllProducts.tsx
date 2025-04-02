@@ -38,7 +38,7 @@ const AllProducts: React.FC = () => {
             <div className="product-wrapper">
               <div>
                 <button className="edit-btn" onClick={() => navigate(`/edit-product/${product.id}`, { state: product })}>
-                    ✏️ Edit
+                    <img src="..\public\assets\edit-3-svgrepo-com.svg" alt="Edit" className="icon" />
                 </button>
                 {product.imageUrl ? (
                   <img src={product.imageUrl} alt={product.name} className="product-image" />
