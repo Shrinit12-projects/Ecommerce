@@ -6,7 +6,7 @@ dotenv.config();
 
 
 
-// 🔹 MinIO Configuration
+//  MinIO Configuration
 const minioClient = new Client({
   endPoint: "localhost",
   port: 9000,

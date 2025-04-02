@@ -3,7 +3,7 @@ import cors from "cors";
 import { AppDataSource } from "./ormconfig";
 import { Product } from "./entities/product";
 import { Repository } from "typeorm";
-import { uploadFileToMinio } from "./helper/minioConfig"; // Adjust the import path as necessary
+import { uploadFileToMinio } from "./helper/minioConfig";
 import multer from "multer";
 
 const app: Application = express();
